@@ -3,13 +3,13 @@
 
 ## **About The Project**
 
-This is a study project/library that calculates the values of a loan. A previous knowledge about finances, loans and mathematics are necessary to fully understand this appilcation
+This is a study project/library that calculates the values of a loan. A previous knowledge about finances, loans and mathematics are necessary to fully understand this application
 
 ## **Getting Started**
 
 ### **Instaling**
 
-Use go get to install the latestet version of the library.
+Use go get to install the latest version of the library.
 
 ```sh
 github.com/ThiagoDonadel/funding-calculator
@@ -45,7 +45,7 @@ This section will explain some rules used in the calculations.
 
 ### **Calculation Method**
 
-The library has two caclulations methods: 
+The library has two calculations  methods: 
 
 **Constant Amortization:**  In this method we have a constant amortization value being paid every month
 
@@ -76,9 +76,9 @@ E.g.:
 
 ### **Interest Rates**
 
-All calculations are calculated **MONTHLY**, because of that the interest rate is always transformed to monthly using the equivalency calculation.
+All calculations are calculated **MONTHLY**, because of that the interest rate is always transformed to monthly rate using the equivalency calculation.
 
-All interest values are calculated using the coumpound rule.
+All interest values are calculated using the compound rule.
 
 ### **Installment Date Generator**
 
