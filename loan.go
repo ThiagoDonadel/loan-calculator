@@ -46,10 +46,13 @@ func calculateFrenchPrice(initialValue, rate float64, rateType RateBase, term in
 	payments := []*LoanValue{}
 	balance := initialValue
 
-	payments = append(payments, &LoanValue{PaymentDate: currentDate, Balance: balance})
+	installmentNumber := 0
+
+	payments = append(payments, &LoanValue{Number: installmentNumber, PaymentDate: currentDate, Balance: balance})
 
 	for ok := true; ok; ok = currentDate.Before(finalDate) {
 		currentDate = currentDate.AddDate(0, 1, 0)
+		installmentNumber++
 
 		interestValue := balance * montthlyRate
 		amortizationValue := installmentValue - interestValue
@@ -59,7 +62,7 @@ func calculateFrenchPrice(initialValue, rate float64, rateType RateBase, term in
 			balance = 0
 		}
 
-		loanValue := &LoanValue{PaymentDate: currentDate, Installment: installmentValue, Interest: interestValue, Amortization: amortizationValue, Balance: balance}
+		loanValue := &LoanValue{Number: installmentNumber, PaymentDate: currentDate, Installment: installmentValue, Interest: interestValue, Amortization: amortizationValue, Balance: balance}
 		payments = append(payments, loanValue)
 	}
 
@@ -84,10 +87,13 @@ func calculateConstantAmortization(initialValue, rate float64, rateType RateBase
 
 	balance := initialValue
 
-	payments = append(payments, &LoanValue{PaymentDate: currentDate, Balance: balance})
+	installmentNumber := 0
+
+	payments = append(payments, &LoanValue{Number: installmentNumber, PaymentDate: currentDate, Balance: balance})
 
 	for ok := true; ok; ok = currentDate.Before(finalDate) {
 		currentDate = currentDate.AddDate(0, 1, 0)
+		installmentNumber++
 
 		if currentDate.Equal(finalDate) {
 			amortizationValue = balance
@@ -101,7 +107,7 @@ func calculateConstantAmortization(initialValue, rate float64, rateType RateBase
 			balance = 0
 		}
 
-		loanValue := &LoanValue{PaymentDate: currentDate, Installment: installmentValue, Interest: interestValue, Amortization: amortizationValue, Balance: balance}
+		loanValue := &LoanValue{Number: installmentNumber, PaymentDate: currentDate, Installment: installmentValue, Interest: interestValue, Amortization: amortizationValue, Balance: balance}
 		payments = append(payments, loanValue)
 
 	}

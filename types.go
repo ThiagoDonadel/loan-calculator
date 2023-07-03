@@ -7,21 +7,22 @@ import (
 
 // Struct that holds the calculated values
 type LoanValue struct {
-	PaymentDate  time.Time //date of the installment
-	Installment  float64   //installment value paid.
-	Interest     float64   //interest paid on the date
+	Number       int       // installment number
+	PaymentDate  time.Time // date of the installment
+	Installment  float64   // installment value paid.
+	Interest     float64   // interest paid on the date
 	Amortization float64   // the amortization value paid on the date
-	Balance      float64   //remaining loanaed ammount
+	Balance      float64   // remaining loanaed ammount
 }
 
 // Struct that holds the parameters that will be used to calculate
 type CalculationParameters struct {
-	Method         CalculationMethod //method to be used to calculate
-	InitialValue   float64           //value loaned, must be > 0
-	Rate           float64           //interest Rate Value (percentual value), must be >= 0
-	RateBaseMonths RateBase          //number of months that the interest occurs (e.g. a interest that occurs Yearly has a period of 12 months)
-	Term           int               //number of months that the calculation will run, must be > 0
-	BaseDate       time.Time         //date that the calculation starts
+	Method         CalculationMethod // method to be used to calculate
+	InitialValue   float64           // value loaned, must be > 0
+	Rate           float64           // interest Rate Value (percentual value), must be >= 0
+	RateBaseMonths RateBase          // number of months that the interest occurs (e.g. a interest that occurs Yearly has a period of 12 months)
+	Term           int               // number of months that the calculation will run, must be > 0
+	BaseDate       time.Time         // date that the calculation starts
 }
 
 // Validate if the informed parameters are valid
