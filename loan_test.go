@@ -28,7 +28,7 @@ func (s *LoanTestSuite) TestPriceCalculation() {
 	}
 
 	expectedInstallment := 855.57
-	expected := []*loancalculator.LoanValue{
+	expected := []*loancalculator.Value{
 		{Number: 0, PaymentDate: baseDate, Installment: 0, Interest: 0, Amortization: 0, Balance: 10000.0},
 		{Number: 1, PaymentDate: baseDate.AddDate(0, 1, 0), Installment: expectedInstallment, Interest: 40.74, Amortization: 814.82, Balance: 9185.18},
 		{Number: 2, PaymentDate: baseDate.AddDate(0, 2, 0), Installment: expectedInstallment, Interest: 37.42, Amortization: 818.14, Balance: 8367.03},
@@ -63,7 +63,7 @@ func (s *LoanTestSuite) TestSACCalculation() {
 	}
 
 	expectedPrincipalValue := 833.33
-	expected := []*loancalculator.LoanValue{
+	expected := []*loancalculator.Value{
 		{Number: 0, PaymentDate: baseDate, Installment: 0, Interest: 0, Amortization: 0, Balance: 10000.0},
 		{Number: 1, PaymentDate: baseDate.AddDate(0, 1, 0), Installment: 874.07, Interest: 40.74, Amortization: expectedPrincipalValue, Balance: 9166.67},
 		{Number: 2, PaymentDate: baseDate.AddDate(0, 2, 0), Installment: 870.68, Interest: 37.35, Amortization: expectedPrincipalValue, Balance: 8333.34},

@@ -6,7 +6,7 @@ import (
 )
 
 // Struct that holds the calculated values
-type LoanValue struct {
+type Value struct {
 	Number       int       // installment number
 	PaymentDate  time.Time // date of the installment
 	Installment  float64   // installment value paid.

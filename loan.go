@@ -8,7 +8,7 @@ import (
 // Calculates loan values according with parameters.
 //
 // The interest rates are always transformed to a MONTHLY base during the calculation
-func Calculate(parameters CalculationParameters) ([]*LoanValue, error) {
+func Calculate(parameters CalculationParameters) ([]*Value, error) {
 
 	if ok, err := parameters.Validate(); !ok {
 		return nil, err
@@ -29,7 +29,7 @@ func Calculate(parameters CalculationParameters) ([]*LoanValue, error) {
 }
 
 // Calculate values following the FRENCH PRICE METHOD rules.
-func calculateFrenchPrice(initialValue, rate float64, rateType RateBase, term int, baseDate time.Time) ([]*LoanValue, error) {
+func calculateFrenchPrice(initialValue, rate float64, rateType RateBase, term int, baseDate time.Time) ([]*Value, error) {
 
 	//calculates de equivalent interest MONTHLY rate
 	montthlyRate := calculateRate(rate, 1, int(rateType))
@@ -43,12 +43,12 @@ func calculateFrenchPrice(initialValue, rate float64, rateType RateBase, term in
 	currentDate := baseDate
 	finalDate := currentDate.AddDate(0, term, 0)
 
-	payments := []*LoanValue{}
+	payments := []*Value{}
 	balance := initialValue
 
 	installmentNumber := 0
 
-	payments = append(payments, &LoanValue{Number: installmentNumber, PaymentDate: currentDate, Balance: balance})
+	payments = append(payments, &Value{Number: installmentNumber, PaymentDate: currentDate, Balance: balance})
 
 	for ok := true; ok; ok = currentDate.Before(finalDate) {
 		currentDate = currentDate.AddDate(0, 1, 0)
@@ -62,7 +62,7 @@ func calculateFrenchPrice(initialValue, rate float64, rateType RateBase, term in
 			balance = 0
 		}
 
-		loanValue := &LoanValue{Number: installmentNumber, PaymentDate: currentDate, Installment: installmentValue, Interest: interestValue, Amortization: amortizationValue, Balance: balance}
+		loanValue := &Value{Number: installmentNumber, PaymentDate: currentDate, Installment: installmentValue, Interest: interestValue, Amortization: amortizationValue, Balance: balance}
 		payments = append(payments, loanValue)
 	}
 
@@ -72,7 +72,7 @@ func calculateFrenchPrice(initialValue, rate float64, rateType RateBase, term in
 
 }
 
-func calculateConstantAmortization(initialValue, rate float64, rateType RateBase, term int, baseDate time.Time) ([]*LoanValue, error) {
+func calculateConstantAmortization(initialValue, rate float64, rateType RateBase, term int, baseDate time.Time) ([]*Value, error) {
 
 	//calculates de equivalent interest MONTHLY rate
 	montthlyRate := calculateRate(rate, 1, int(rateType))
@@ -83,13 +83,13 @@ func calculateConstantAmortization(initialValue, rate float64, rateType RateBase
 	currentDate := baseDate
 	finalDate := currentDate.AddDate(0, term, 0)
 
-	payments := []*LoanValue{}
+	payments := []*Value{}
 
 	balance := initialValue
 
 	installmentNumber := 0
 
-	payments = append(payments, &LoanValue{Number: installmentNumber, PaymentDate: currentDate, Balance: balance})
+	payments = append(payments, &Value{Number: installmentNumber, PaymentDate: currentDate, Balance: balance})
 
 	for ok := true; ok; ok = currentDate.Before(finalDate) {
 		currentDate = currentDate.AddDate(0, 1, 0)
@@ -107,7 +107,7 @@ func calculateConstantAmortization(initialValue, rate float64, rateType RateBase
 			balance = 0
 		}
 
-		loanValue := &LoanValue{Number: installmentNumber, PaymentDate: currentDate, Installment: installmentValue, Interest: interestValue, Amortization: amortizationValue, Balance: balance}
+		loanValue := &Value{Number: installmentNumber, PaymentDate: currentDate, Installment: installmentValue, Interest: interestValue, Amortization: amortizationValue, Balance: balance}
 		payments = append(payments, loanValue)
 
 	}
@@ -122,7 +122,7 @@ func calculateRate(rate float64, period, base int) float64 {
 	return math.Pow(1+rate, float64(period)/float64(base)) - 1
 }
 
-func roundValues(payments []*LoanValue) {
+func roundValues(payments []*Value) {
 
 	for _, payment := range payments {
 		payment.Installment = round(payment.Installment)
